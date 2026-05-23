@@ -1,0 +1,53 @@
+## 문제
+정수 배열 numbers의 각 원소에 두배한 원소를 가진 배열을 return.
+
+// AI나 인터넷의 도움을 받았을 경우
+## 도움 받기 전 내 풀이
+```java
+class Solution {
+    public int[] solution(int[] numbers) {
+        int[] answer = {};
+        for (int i = 0; i < numbers.length; i++) {
+            answer[i] *= numbers[i];
+        }
+        return answer;
+    }
+}
+```
+발생 오류
+-> [ArrayIndexOutOfBoundsException: Index 0 out of bounds for length 0]
+  -> 길이가 0인 배열(빈 배열)에서 0번째 요소를 읽으려 했다는 뜻
+    int[] arr = new int[0]; // 빈 배열
+    int x = arr[0];         // ❌ 여기서 터짐
+
+## 내 풀이
+```java
+class Solution {
+    public int[] solution(int[] numbers) {
+        int[] answer = new int[numbers.length];
+        for (int i = 0; i < numbers.length; i++) {
+            answer[i] = numbers[i]*2;
+        }
+        return answer;
+    }
+}
+```
+
+## 더 나은 풀이
+```java
+import java.util.Arrays;
+
+class Solution {
+    public int[] solution(int[] numbers) {
+        return Arrays.stream(numbers).map(i -> i * 2).toArray();
+    }
+}
+```
+-> stream/map 버전 존재, 현재(26.05.24) 나의 실력이나 지식으로는 힘들기에 이후 학습 예정.
+
+-------------------------------------------------
+## 핵심 원리
+Java 배열은 선언 시 크기를 명시해야 함.
+
+## 언제 쓸 수 있나?
+잘 모르겠음.
