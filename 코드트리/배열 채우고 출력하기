@@ -1,0 +1,50 @@
+## 문제
+문자 10개를 저장할 수 있는 배열을 만들고 10개의 문자를 입력받습니다. 입력받은 문자들을 입력 받은 순서의 역순으로 출력하는 프로그램을 작성
+
+## 내 풀이
+```java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        char[] ch = new char[10];
+        
+        for (int i = 0; i < ch.length; i++) {
+            ch[i] = sc.next().charAt(0);
+        }
+        
+        for (int j = ch.length - 1; j <= 0; j--) {
+            System.out.print(ch[j]);
+        }
+    }
+}
+```
+
+## 더 나은 풀이
+```java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        char[] ch = new char[10];
+        
+        for (int i = 0; i < ch.length; i++) {
+            ch[i] = sc.next().charAt(0);
+        }
+        
+        for (int j = ch.length - 1; j >= 0; j--) {
+            System.out.print(ch[j]);
+        }
+    }
+}
+```
+
+-------------------------------------------------
+## 핵심 원리
+for문 안에서 char 배열의 입력을 받음. charAt(0) 필수!
+j <= 0 말고 j >= 0 이어야 해
+
+## 언제 쓸 수 있나?
+char 배열에 문자를 입력받아야하는 상황.
