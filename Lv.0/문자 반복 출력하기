@@ -1,0 +1,40 @@
+## 문제
+문자열 `my_string`과 정수 `n`이 매개변수로 주어질 때, `my_string`에 들어있는 각 문자를 `n`만큼 반복한 문자열을 return
+
+## 도움 받기 전 내 풀이
+```java
+        for (int i = 0; i < my_string.length(); i++) {
+             my_string.charAt(i);
+            for (int j = 0; j < n; j++) {
+                answer = my_string.charAt(i);
+            }
+        }
+```
+발생 오류
+-> `char cannot be converted to String` — `=` 대입 시 char → String 자동변환 없음  
+-> `+=` 대신 `=` 를 써서 매번 덮어쓰고 있었음
+
+## 더 나은 풀이
+```java
+        for (int i = 0; i < my_string.length(); i++) {
+            char ch = my_string.charAt(i);
+            for (int j = 0; j < n; j++) {
+                answer += ch;
+                // answer += String.valueOf(ch); 가 더 명확한 정답이지만 묵시적 형변환으로 그냥 ch만 적어도 가능!
+            }
+        }
+```
+
+## 핵심 원리
+
+- `String += char` → `+` 연산 과정에서 char가 String으로 **자동 변환**됨
+- `String = char` → 순수 대입은 자동변환 없어서 **타입 오류** 발생
+- `answer +=` 는 기존 문자열에 **이어 붙이기**, `answer =` 는 **덮어쓰기**
+- `StringBuilder.append()`는 `String +=` 보다 메모리 효율이 좋음  
+  (String은 연산마다 새 객체 생성, StringBuilder는 내부 버퍼에 누적)
+
+## 언제 쓸 수 있나?
+
+- 문자열을 **한 글자씩 순회**하면서 가공할 때
+- 특정 문자를 **반복/치환/필터링**해서 새 문자열을 만들 때
+- 반복문으로 문자열을 **누적 조합**할 때는 `StringBuilder` 습관 들이기
