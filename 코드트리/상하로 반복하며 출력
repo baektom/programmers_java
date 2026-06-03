@@ -1,0 +1,112 @@
+## 문제
+정수 N의 값이 주어지면 N값에 따라 1에서 N까지의 정수들을 상하로 반복하며 출력하는 프로그램을 작성해보세요.
+[예시]
+입력    입력
+4       5
+
+출력    출력
+1414    15151
+2323    24242
+3232    33333
+4141    42424
+        51515
+
+// AI나 인터넷의 도움을 받았을 경우
+## 도움 받기 전 내 풀이1
+```java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // Please write your code here.
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[][] arr = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            if (i % 2 == 0) {
+                for (int j = 0; j < n; j++) {
+                    arr[j][i] = i+1;
+                    System.out.print(j + ", " + i + " -> " + arr[j][i] + " | ");
+                }
+            } else {
+                for (int j = n-1; j >= 0; j--) {
+                    arr[j][i] = i+1;
+                    System.out.print(j + ", " + i + " -> " + arr[j][i] + " | ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(arr[j][i] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+```
+
+## 내 풀이2
+```java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // Please write your code here.
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] rows = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                rows[j] = j+1;
+                System.out.print(i + ", " + j + " -> " + rows[j] + " | ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(i + ", " + j + " -> " + rows[i] + " | ");
+            }
+            System.out.println();
+        }
+    }
+}
+```
+
+## 더 나은 풀이
+```java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // Please write your code here.
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (j % 2 == 0) {
+                    System.out.print(i+1);
+                } else {
+                    System.out.print(n-i);
+                }
+            }
+            System.out.println();
+        }
+    }
+}
+```
+
+-------------------------------------------------
+## 핵심 원리
+- 스코프 또 한 번 확인
+- 배열 없이 수식으로 풀 수 있다는 시각
+- j가 for문 안에서 조건문으로 쓰일 수 있다는 것
+
+## 언제 쓸 수 있나?
