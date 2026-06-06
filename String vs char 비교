@@ -1,0 +1,16 @@
+## String vs char 비교
+
+### 핵심
+- char: 원시 타입 → == 으로 값 비교
+- String: 객체 → == 은 주소 비교, 내용 비교는 .equals()
+
+### 언제 char가 되나
+sc.next().charAt(0) → String에서 char로 변환됨
+
+### 코드 예시
+char c = sc.next().charAt(0);
+if (c == 'S') ...  // OK
+
+String s = sc.next();
+if (s.equals("S")) ...  // OK
+if (s == "S") ...  // 위험
