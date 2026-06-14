@@ -1,0 +1,40 @@
+## hasNext() 계열 메소드
+
+### 역할
+읽기 전에 입력이 있는지 확인하는 메소드
+없으면 false, 있으면 true 반환
+
+### 종류
+- hasNext()      → 다음 입력(문자열)이 있는지
+- hasNextInt()   → 다음 입력이 정수인지
+- hasNextDouble() → 다음 입력이 실수인지
+
+### 핵심 교훈
+nextInt(), next() 등은 입력이 없으면 NoSuchElementException 터짐
+→ 읽기 전에 반드시 hasNext() 계열로 먼저 확인
+
+### 패턴
+if (!sc.hasNextInt()) break;  // 없으면 종료
+int a = sc.nextInt();          // 있으면 읽기
+
+### 언제 쓰나
+입력 개수가 정해져 있지 않고 끝 조건이 "입력 없음"일 때
+
+## 코드
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // Please write your code here.
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            if (!sc.hasNextInt()) break;
+            int trans = sc.nextInt();
+            if (!sc.hasNextInt()) break;
+            int length = sc.nextInt();
+            if (!sc.hasNext()) break;
+            char c = sc.next().charAt(0);
+            System.out.println(trans * length);
+        }
+    }
+}   
