@@ -1,0 +1,47 @@
+## 문제
+
+## 내 풀이
+```java
+class Solution {
+    public double solution(int[] numbers) {
+        int sum = 0;
+        double cnt = 0;
+        for (int i = 0; i < numbers.length; i++) {
+            sum += numbers[i];
+            cnt++;
+        }
+        double answer = sum/cnt;
+        return answer;
+    }
+}
+```
+
+## 더 나은 풀이
+```java
+class Solution {
+    public double solution(int[] numbers) {
+        int sum = 0;
+        for (int i = 0; i < numbers.length; i++) 
+            sum += numbers[i];
+        double answer = (double)sum/numbers.length;
+        return answer;
+    }
+}
+```
+
+## 더 상위 버전 풀이
+```java
+import java.util.Arrays;
+
+class Solution {
+    public double solution(int[] numbers) {
+        return Arrays.stream(numbers).average().orElse(0);
+    }
+}
+```
+
+-------------------------------------------------
+## 핵심 원리
+첨에 numbers.length가 아닌 number.length로 해결되지 않은 문제. 변수명 잘 쓰기...
+
+## 언제 쓸 수 있나?
