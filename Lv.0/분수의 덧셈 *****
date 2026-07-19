@@ -1,0 +1,100 @@
+## 문제
+첫 번째 분수의 분자와 분모를 뜻하는 numer1, denom1, 두 번째 분수의 분자와 분모를 뜻하는 numer2, denom2가 매개변수로 주어집니다. 
+두 분수를 더한 값을 기약 분수로 나타냈을 때 분자와 분모를 순서대로 담은 배열을 return 하도록 solution 함수를 완성해보세요.
+
+// AI나 인터넷의 도움을 받았을 경우
+## 도움 받기 전 내 풀이
+```java
+class Solution {
+    public int[] solution(int numer1, int denom1, int numer2, int denom2) {
+        int[] answer = new int[2];
+        if (denom1 == denom2) {
+            answer[0] = numer1 + numer2;
+            answer[1] = denom1;
+        } else {
+            if (denom1 % denom2 == 0) {
+                answer[0] = numer1 + numer2*(denom1/denom2);
+                answer[1] = denom1;
+            } else if (denom2 % denom1 == 0) {
+                answer[0] = numer1*(denom2/denom1) + numer2;
+                answer[1] = denom2;
+            } else {
+                answer[0] = numer1*denom2 + numer2*denom1;
+                answer[1] = denom1 * denom2;
+            }
+        }
+        return answer;
+    }
+}
+```
+발생 오류
+-> 프로그래머스 기본 테스트 케이스는 통과했지만 약분이 가능한 분수까지 해결하지 못함. 
+
+## AI의 풀이
+```java
+class Solution {
+    private int gcd(int a, int b) {
+        if (b == 0) return a;
+        return gcd(b, a % b);
+    }
+    public int[] solution(int numer1, int denom1, int numer2, int denom2) {
+        int[] answer = new int[2];
+        if (denom1 == denom2) {
+            answer[0] = numer1 + numer2;
+            answer[1] = denom1;
+        } else {
+            if (denom1 % denom2 == 0) {
+                answer[0] = numer1 + numer2*(denom1/denom2);
+                answer[1] = denom1;
+            } else if (denom2 % denom1 == 0) {
+                answer[0] = numer1*(denom2/denom1) + numer2;
+                answer[1] = denom2;
+            } else {
+                answer[0] = numer1*denom2 + numer2*denom1;
+                answer[1] = denom1 * denom2;
+            }
+        }
+        int g = gcd(answer[0], answer[1]);
+        answer[0] /= g;
+        answer[1] /= g;
+        return answer;
+    }
+}
+```
+
+## 다른 사람의 풀이
+```java
+class Solution {
+    public int[] solution(int denum1, int num1, int denum2, int num2) {
+        int mother = num1 * num2;
+        int son1 = num1 * denum2;
+        int son2 = num2 * denum1;
+        int totalSon = son1 + son2;
+        for(int i = mother; i >= 1; i--){
+            if(totalSon % i == 0 && mother % i == 0){
+                totalSon /= i;
+                mother /= i;
+            }
+        }
+        int[] answer = {totalSon, mother};
+        return answer;
+    }
+}
+```
+
+-------------------------------------------------
+## 핵심 원리
+약분(기약분수로 만들기) 방법: 최대공약수(GCD)를 구해서 분자, 분모를 그걸로 나눠주기.
+▪ 힌트: 유클리드 호제법으로 GCD 구하는 함수를 하나 만들어 (gcd(a, b)) — b가 0이 될 때까지 a, b를 (b, a%b)로 갱신하는 재귀/반복문으로 짤 수 있음.
+▪ answer[0], answer[1]을 계산한 직후에, 이 둘의 GCD를 구해서 각각 나눠주면 기약분수가 됨.
+▪ 왜 되는가: 분자/분모를 각각의 GCD로 나누면 두 수가 서로소가 되어, 더 이상 공통으로 나눌 수 있는 수가 없는 상태(=기약분수)가 되기 때문.
+
+다른 방식 비교 (아래 "다른 사람의 풀이"에서 사용):
+GCD를 함수로 따로 만들지 않고, 분모 크기만큼 반복문을 돌며 분자와 분모를 동시에 나누어떨어지게 하는 가장 큰 수를 찾는 방식도 있음. 다만 이 방식은:
+▪ 시간복잡도가 O(n)이라 유클리드 호제법(O(log n))보다 비효율적
+▪ break가 없어서 최댓값을 찾은 후에도 반복문이 끝까지 도는 구조 (결과엔 문제없지만 불필요한 연산 발생)
+
+## 언제 쓸 수 있나?
+1. 약분이 가능한 분수를 구하는 경우
+2. 최대공약수를 구해야 하는 경우
+3. 두 수의 공약수 중 최댓값을 찾아야 하는 모든 경우 (분수 약분 외에도 응용 가능)
