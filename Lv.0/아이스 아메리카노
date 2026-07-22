@@ -1,0 +1,29 @@
+## 문제
+아이스 아메리카노 한 잔에 5,500원이다. 소지금 money를 이용해 최대 몇 잔의 아아를 마실 수 있고, 잔액은 얼마가 남는지에 대해 배열로 return하라.
+
+## 내 풀이
+```java
+class Solution {
+    public int[] solution(int money) {
+        int[] answer = new int[2];
+        int icedAme = 5500;
+        answer[0] = money / icedAme;
+        answer[1] = money - (answer[0] * icedAme);
+        return answer;
+    }
+}
+```
+
+## 더 나은 풀이
+```java
+class Solution {
+    public int[] solution(int money) {
+        return new int[] { money / 5500, money % 5500 };
+    }
+}
+```
+
+-------------------------------------------------
+## 핵심 원리
+
+## 언제 쓸 수 있나?
