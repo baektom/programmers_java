@@ -1,0 +1,59 @@
+## 문제
+입력받은 문자열을 뒤집어 출력하라.
+
+// AI나 인터넷의 도움을 받았을 경우
+## 도움 받기 전 내 풀이1
+```java
+class Solution {
+    public String solution(String[] str) {
+        String[] answer = new String[srt.length];
+        for (int i = i; i < str.length; i++) {
+            answer[i] = str[str.length-1-i];
+        }
+        return answer;
+    }
+}
+```
+발생 오류
+->error: cannot find symbol
+String 배열은 문자열 안의 문자 하나하나를 인덱스로 가지는게 아니라 각 문자열마다 인덱스로 가지기 때문에 틀린 코드.
+
+## 도움 받기 전 내 풀이2
+```java
+class Solution {
+    public String solution(String str) {
+        String answer = "";
+        for (int i = str.length()-1; i >= 0; i--) {
+            answer.charAt(i) = str.charAt(str.length-1-i);
+        }
+        return answer;
+    }
+}
+```
+발생 오류
+->error: unexpected type
+
+## 내 풀이
+```java
+class Solution {
+    public String solution(String str) {
+        String answer = "";
+        for (int i = str.length()-1; i >= 0; i--) {
+            answer += str.charAt(i);
+        }
+        return answer;
+    }
+}
+```
+
+## 더 나은 풀이
+```java
+
+```
+
+-------------------------------------------------
+## 핵심 원리
+문자열 배열은 문자열 속 문자를 인덱스로 가지는 것이 아님. 문자열 하나 당 인덱스로 가지는 것이므로 문자열 배열은 이 문제에서 맞지 않음.
+어차피 answer은 마치 합계 구하는 반복문에 쓰이는 sum과 같이 비어있기 때문에 str의 문자 하나하나를 역순으로 더해주면 됨.
+
+## 언제 쓸 수 있나?
