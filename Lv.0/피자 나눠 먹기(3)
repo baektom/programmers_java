@@ -1,0 +1,42 @@
+## 문제
+피자 조각을 최대 10조각까지 잘라주는 피자가게의 피자를 n명이 최소 1조각 먹으려면 피자를 몇 판 주문해야하는지 구하라.
+
+## 내 풀이
+```java
+class Solution {
+    public int solution(int slice, int n) {
+        int answer = 0;
+        if (slice >= n) answer = 1; 
+        else {
+            if (n%slice == 0) answer = n/slice;
+            else answer = n/slice + 1;
+        }
+        return answer;
+    }
+}
+```
+
+## 더 나은 풀이
+```java
+class Solution {
+    public int solution(int slice, int n) {
+        int answer = 0;
+        if (n%slice == 0) answer = n/slice;
+        else answer = n/slice + 1;
+        return answer;
+    }
+}
+```
+or
+```java
+  class Solution {
+    public int solution(int slice, int n) {
+        return n % slice > 0 ? n/slice+1 : n/slice;
+    }
+}
+```
+-> 어차피 n%slice로 다 판단되기에 조각 수가 사람 수보다 많거나 같음을 구할 필요가 없음... 
+-------------------------------------------------
+## 핵심 원리
+
+## 언제 쓸 수 있나?
