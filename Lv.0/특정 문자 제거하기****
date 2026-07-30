@@ -1,0 +1,63 @@
+## 문제
+문자열 my_string과 문자 letter가 매개변수로 주어진다. my_string 문자열에서 letter 문자를 제거하여라.
+
+// AI나 인터넷의 도움을 받았을 경우
+## 도움 받기 후 내 풀이
+```java
+class Solution {
+    public String solution(String my_string, String letter) {
+        String answer = my_string.replace(letter, "");
+        return answer;
+    }
+}
+```
+-> 문자열에서 특정 문자 삭제/변환을 위해서는 replace(), replaceAll() 함수를 사용하면 된다.
+
+-------------------------------------------------
+## 핵심 원리
+문자열에서 특정 문자를 삭제/변환하기 위해서는 replace(), replaceAll() 함수를 사용하면 된다.
+* replace() : 첫 번째 매개변수인 "."을 문자로 인식한다.
+ -> replace(): str.replace("hello", "hi"); => str이라는 문자열에 "hello"가 있으면 삭제하고, "hi"로 대체한다. 대체할게 없다면 "hi" 부분에 "" 빈 값을 주면 된다.
+    ```replace()
+    public class Main
+    {
+        public static void main(String[] args)
+        {
+            String str = "Hello, World..";
+     
+            str = str.replace("Hello", "Hi");
+            System.out.println(str);	// "Hi, World..
+            
+            str = str.replace(".", "");
+            System.out.println(str);	// "Hi, World"
+        }
+    }
+    ```
+* replace() : 첫 번째 매개변수인 "."을 정규식으로 인식한다. ("."은 모든 문자를 의미)
+ -> replaceAll(): replace() 함수와 같이 삭제하거나 대체할 문자를 넣어 동일하게 사용할 수 있으나, 어떤 패턴(정규식)을 넣어 사용할 수도 있다.
+                  특정 문자를 정규식으로 인식하여 예상치 못한 결과가 추출될 수 있으나 정규식을 잘 사용하면 매우 편하다. 
+    ```replaceAll()
+    public class Main
+    {
+        public static void main(String[] args)
+        {
+            String str = "Hello, World..";
+     
+            str = str.replaceAll("Hello", "Hi");
+            System.out.println(str);	// "Hi, World..
+            
+            str = str.replaceAll(".", "!");
+            System.out.println(str);	// "!!!!!!!!!!!"
+        }
+    }
+    
+    String str = "Hello, World..123!!";
+    
+    str = str.replaceAll("[^\\w+]", "");	// "HelloWorld123" (문자/숫자를 제외하고 제거)
+    str = str.replaceAll("[\\d+]", "");	// "Hello, World..!!" (숫자를 제거)
+    str = str.replaceAll("[^a-zA-Z]", "");	// "HelloWorld" (문자를 제외하고 제거)
+    str = str.replaceAll("[\\s+]", "");	// "Hello,World..123!!" (공백을 제거)
+    ```
+
+## 언제 쓸 수 있나?
+문자열에서 특정 문자를 삭제/변환하고자 하는 문제.
