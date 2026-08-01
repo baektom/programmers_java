@@ -1,0 +1,51 @@
+## 문제
+주어진 문자열에서 'a', 'e', 'i', 'o', 'u' 모음을 제외하고 출력하는 메소드를 작성하라.
+
+// AI나 인터넷의 도움을 받았을 경우
+## 도움 받기 전 내 풀이
+```java
+class Solution {
+    public String solution(String my_string) {
+        String answer = "";
+        for (int i = 0; i < my_string.length; i++) {
+            if (my_string.charAt(i) == 'a' || my_string.charAt(i) == 'e' || my_string.charAt(i) == 'i' ||
+               my_string.charAt(i) == 'o' || my_string.charAt(i) == 'u') {
+                answer = my_string.replace(my_string.charAt(i), "");
+            }
+        }
+        return answer;
+    }
+}
+```
+발생 오류
+-> my_string.length → 배열이 아닌 문자열이므로 length가 아니라 length()로 메서드 호출을 해야 함 (컴파일 에러).
+   my_string.replace(my_string.charAt(i), "") → replace()는 (char, char) 또는 (CharSequence, CharSequence) 형태로만 받을 수 있는데, char와 ""(String)를 섞어 써서 타입이 맞지 않아 컴파일 에러 발생.
+   설령 타입 문제가 없었더라도, answer에 매번 my_string(원본)을 기준으로 replace 결과를 새로 대입하고 있어서, 반복문을 돌 때마다 이전에 지운 결과가 누적되지 않고 매번 원본에서 다시 시작하는 구조였음. 
+   즉 모음을 하나씩 지워나가는 로직이 아니었음.
+
+## 내 풀이
+```java
+class Solution {
+    public String solution(String my_string) {
+        String answer = my_string.replaceAll("[aeiou]", "");
+        return answer;
+    }
+}
+```
+-------------------------------------------------
+## 핵심 원리
+문자열에서 특정 문자를 삭제/변환하려면 replace(), replaceAll()을 사용.
+replace(): 매개변수를 문자(정규식 아님) 그대로 인식. str.replace("hello", "hi")처럼 찾는 문자열을 그대로 대체할 문자열로 바꿈. 대체할 게 없으면 빈 값 ""을 넣으면 삭제.
+replaceAll(): 매개변수를 정규식으로 인식. 특정 문자를 패턴으로 다룰 수 있어 강력하지만, 정규식 특수문자(., + 등)를 의도치 않게 패턴으로 해석할 수 있어 주의가 필요함.
+[] (문자 클래스) 사용법:
+  [aeiou] → a, e, i, o, u 중 하나 (나열)
+  [a-zA-Z] → a~z, A~Z 범위의 모든 문자 (범위)
+  [^aeiou] → ^를 앞에 붙이면 "제외" 의미, 모음이 아닌 것들
+  [\\d+] → 숫자
+  [\\s+] → 공백
+즉 "특정 문자들을 제거하고 싶다"는 요구는 replaceAll("[제거하고싶은문자들]", "") 형태로 바로 표현 가능함.
+
+## 언제 쓸 수 있나?
+1. 문자열에서 특정 문자(모음, 숫자, 공백 등)를 제거하거나 다른 문자로 치환해야 하는 경우
+2. 여러 개의 서로 다른 문자를 한 번에 검사/치환해야 할 때 (if문으로 하나씩 비교하는 대신 정규식 문자 클래스로 한 번에 처리 가능)
+3. 문자/숫자만 남기기, 특정 패턴만 걸러내기 등 문자열 필터링이 필요한 경우
