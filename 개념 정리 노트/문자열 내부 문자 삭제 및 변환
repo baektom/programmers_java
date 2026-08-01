@@ -1,0 +1,60 @@
+replace() / replaceAll() 정리
+문자열에서 특정 문자를 삭제/변환하려면 replace(), replaceAll()을 사용한다.
+
+replace()
+매개변수를 문자 그대로 인식한다 (정규식 아님).
+
+java
+public class Main
+{
+    public static void main(String[] args)
+    {
+        String str = "Hello, World..";
+ 
+        str = str.replace("Hello", "Hi");
+        System.out.println(str);	// "Hi, World.."
+        
+        str = str.replace(".", "");
+        System.out.println(str);	// "Hi, World"
+    }
+}
+
+str.replace("hello", "hi")처럼 찾는 문자열을 그대로 대체할 문자열로 바꾼다. 대체할 게 없으면 ""(빈 값)을 넣으면 삭제된다.
+=========================================
+replaceAll()
+매개변수를 정규식으로 인식한다.
+
+java
+public class Main
+{
+    public static void main(String[] args)
+    {
+        String str = "Hello, World..";
+ 
+        str = str.replaceAll("Hello", "Hi");
+        System.out.println(str);	// "Hi, World.."
+        
+        str = str.replaceAll(".", "!");
+        System.out.println(str);	// "!!!!!!!!!!!!!!"  (.은 정규식에서 "모든 문자"를 의미)
+    }
+}
+
+replace()와 같이 삭제하거나 대체할 문자를 넣어 동일하게 사용할 수 있지만, 어떤 패턴(정규식)을 넣어서도 사용할 수 있다. 특정 문자를 정규식으로 인식해 예상치 못한 결과가 나올 수 있으니 주의가 필요하지만, 정규식을 잘 활용하면 매우 편하다.
+
+java
+String str = "Hello, World..123!!";
+
+str = str.replaceAll("[^\\w+]", "");	// "HelloWorld123" (문자/숫자를 제외하고 제거)
+str = str.replaceAll("[\\d+]", "");	// "Hello, World..!!" (숫자를 제거)
+str = str.replaceAll("[^a-zA-Z]", "");	// "HelloWorld" (문자를 제외하고 제거)
+str = str.replaceAll("[\\s+]", "");	// "Hello,World..123!!" (공백을 제거)
+[] (문자 클래스) 사용법
+
+[]는 정규식에서 "이 안에 있는 문자들 중 하나"를 의미하는 문자 클래스다.
+표현	의미
+  [aeiou]	a, e, i, o, u 중 하나 (나열)
+  [a-zA-Z]	a~z, A~Z 범위의 모든 문자 (범위)
+  [^aeiou]	^를 앞에 붙이면 "제외" 의미, 모음이 아닌 것들
+  [\\d+]	숫자
+  [\\s+]	공백
+즉 "특정 문자들을 제거하고 싶다"는 요구는 replaceAll("[제거하고싶은문자들]", "") 형태로 바로 표현 가능하다. (예: 모음 제거 → replaceAll("[aeiou]", ""))
