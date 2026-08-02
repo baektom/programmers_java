@@ -1,0 +1,39 @@
+## 문제
+주어진 정수 배열의 원소 중 두 개를 곱해 나올 수 있는 가장 최댓값을 구하라.
+
+## 내 풀이
+```java
+import java.util.Arrays;
+class Solution {
+    public int solution(int[] numbers) {
+        int answer = 0;
+        Arrays.sort(numbers);
+        for (int i = 0; i < numbers.length; i++) {
+            answer = numbers[numbers.length-1] * numbers[numbers.length-2];
+        }
+        return answer;
+    }
+}
+```
+
+## 더 나은 풀이
+```java
+import java.util.*;
+
+class Solution {
+    public int solution(int[] numbers) {
+        int answer = 0;
+
+        Arrays.sort(numbers);
+
+        return numbers[numbers.length-1]*numbers[numbers.length-2];
+    }
+}
+```
+-> 여전히 for문에 집착하는 중. 
+   배열 문제기에 for문이 없어도 인덱스 접근이 가능.
+
+-------------------------------------------------
+## 핵심 원리
+
+## 언제 쓸 수 있나?
