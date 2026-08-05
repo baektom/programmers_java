@@ -1,0 +1,20 @@
+작상 날짜 - 2026.08.06
+## 문제
+매개변수로 주어진 문자열 배열 strlist의 각 원소의 길이를 담은 배열을 return하는 메소드를 구하라.
+
+## 내 풀이
+```java
+class Solution {
+    public int[] solution(String[] strlist) {
+        int[] answer = new int[strlist.length];
+        for (int i = 0; i < strlist.length; i++) {
+            answer[i] = strlist[i].length();
+        }
+        return answer;
+    }
+}
+```
+-------------------------------------------------
+## 핵심 원리
+
+## 언제 쓸 수 있나?
