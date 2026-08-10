@@ -1,0 +1,72 @@
+작상 날짜 - 2026.08.10
+## 문제
+세 개의 선분이 주어지고 가장 긴 선분이 다른 두 선분의 합보다 작아야한다는 조건을 만족해야 삼각형이 만들어진다.
+삼각형이 만들어진다면 1, 만들어지지 않는다면 2를 return하는 solution 함수를 완성하라.
+
+// AI나 인터넷의 도움을 받았을 경우
+## 도움 받기 전 내 풀이
+```java
+class Solution {
+    public int solution(int[] sides) {
+        int answer = 0;
+        if (sides[0] > sides[1] && sides[0] > sides[2]) {
+            if (sides[0] < sides[1] + sides[2]) answer = 1;
+            else answer = 2;
+        } else if (sides[0] < sides[1] && sides[0] > sides[2]) {
+            if (sides[1] < sides[0] + sides[2]) answer = 1;
+            else answer = 2;
+        } else if (sides[0] > sides[1] && sides[0] < sides[2]) {
+            if (sides[2] < sides[0] + sides[1]) answer = 1;
+            else answer = 2;
+        }
+        return answer;
+    }
+}
+```
+발생 오류
+-> 입력값이 [3, 6, 2], [199, 72, 222]일 때는 정상 동작하지만, [1, 2, 3]일 때는 answer가 0으로 출력되며 실패.
+   원인: 조건문이 sides[0]이 최댓값인 경우, 중간값인 경우, 최솟값인 경우를 전부 다루지 못함. 
+         sides[0]이 세 값 중 가장 작은 값이면서 sides[2]가 최댓값인 조합([1,2,3])이 세 조건문 어디에도 걸리지 않아, if-else if를 모두 건너뛰고 초기값 0이 그대로 반환됨.
+   최댓값을 먼저 구하는 방식이 가장 깔끔하다는 건 알았지만, 최댓값을 구하는 함수를 몰라서 조건문 조합으로 억지로 풀려다 생긴 문제였음.
+
+## 내 풀이
+```java
+class Solution {
+    public int solution(int[] sides) {
+        int max = Math.max(sides[0], Math.max(sides[1], sides[2]));
+        if (((sides[0] + sides[1] + sides[2]) - max) > max) return 1;
+        else return 2;
+    }
+}
+```
+-> `Math.max()`로 세 변 중 최댓값을 구하고, 전체 합에서 최댓값을 뺀 값(=나머지 두 변의 합)이 최댓값보다 큰지만 비교하면 됨.
+   대소관계를 일일이 조건문으로 나눌 필요 없이, "최댓값 vs 나머지 두 변의 합" 비교 하나로 모든 경우를 커버 가능.
+
+## 다른 사람의 풀이(정렬 활용)
+```java
+import java.util.Arrays;
+class Solution {
+    public int solution(int[] sides) {
+        int answer = 0;
+        Arrays.sort(sides);
+        return sides[2] >= sides[0]+sides[1] ? 2 : 1;
+    }
+}
+```
+-> Arrays.sort(sides)로 배열을 오름차순 정렬하면 sides[0] ≤ sides[1] ≤ sides[2]가 보장되므로, 굳이 Math.max()를 쓰지 않고도 sides[2]가 곧 최댓값이 됨.
+   sides[2] >= sides[0]+sides[1] ? 2 : 1은 삼항 연산자(조건 ? 참일때값 : 거짓일때값)로, "최댓값이 나머지 두 변의 합보다 크거나 같으면 삼각형 불가(2), 작으면 삼각형 가능(1)"을 한 줄로 표현.
+   내 풀이(Math.max)와 이 풀이(Arrays.sort)는 성능 우열이 아니라 다른 접근 방식의 비교로 보는 게 맞음. 
+   3개 고정 배열에서는 정렬 비용(O(n log n))과 값만 뽑아 계산하는 비용(O(1))의 차이가 체감되지 않지만, 배열 크기가 커지는 문제라면 Math.max 방식이 더 유리하다고 함.
+
+-------------------------------------------------
+## 핵심 원리
+최댓값을 구하기 위해서는 Math 클래스의 Math.max() 함수를 사용하는 것이 좋다.
+두 수 중 최댓값을 구하는 것이라면 Math.max(num1, num2)만으로 가능하다.
+하지만 세 개의 수라면 Math.max(num1, Math.max(num2, num3))처럼 중첩해서 구해야 한다. (안쪽 Math.max로 두 값을 먼저 비교하고, 그 결과를 바깥쪽 Math.max로 나머지 하나와 다시 비교하는 방식)
+세 값 중 최댓값을 구한 뒤에는, "나머지 두 값의 합"을 별도로 계산할 필요 없이 (전체 합) - (최댓값)으로 바로 구할 수 있다.
+대소관계를 조건문 조합으로 다 나누려다 보면 경우의 수를 빠뜨리기 쉬우므로, 최댓값·최솟값처럼 "특정 값 하나를 기준으로 판단해야 하는 문제"는 조건문보다 관련 함수(Math.max, Math.min 등)를 활용하는 게 실수를 줄이는 방법이다.
+
+## 언제 쓸 수 있나?
+1. 여러 값 중 최댓값/최솟값을 구해야 하는 경우
+2. 세 변으로 삼각형 성립 여부를 판단하는 것처럼, "가장 큰 값 vs 나머지 값들의 합/관계"를 비교해야 하는 문제
+3. 대소관계에 따른 조건 분기가 많아질 것 같은 문제에서, 값 자체를 먼저 정리(최댓값 추출 등)한 뒤 로직을 단순화하고 싶을 때
