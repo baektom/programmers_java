@@ -1,0 +1,50 @@
+작상 날짜 - 2026.08.17
+## 문제
+매개변수로 주어진 문자열의 대소문자를 구분하여 반전시켜 반환하라.
+
+// AI나 인터넷의 도움을 받았을 경우
+## 도움 받기 전 내 풀이
+```java
+class Solution {
+    public String solution(String str) {
+        String answer = str.replaceAll("[^a-z]", "[^A-Z]");;
+        return answer;
+    }
+}
+```
+발생 오류
+-> 변환되지 않음.
+   근본 원인: replaceAll(정규식, 대체문자열)은 정규식에 매칭되는 부분을 고정된 문자열로 통째로 치환하는 함수이지, "매칭된 문자 하나하나를 각각 다른 문자로 개별 변환"해주는 함수가 아님. 
+            "[^A-Z]"라는 문자열 자체가 그대로 대체값으로 들어가버려서, 대문자를 소문자로/소문자를 대문자로 "각각" 바꾸는 로직 자체가 성립하지 않음. 
+            이 문제는 문자 하나하나를 순회하며 개별 판단이 필요한 문제라 애초에 replaceAll 한 줄로는 풀 수 없는 구조였음.
+
+## 도움 받은 풀이
+```java
+class Solution {
+    public String solution(String str) {
+        String answer = "";
+        for (int i = 0; i < str.length(); i++) {
+            if (Character.isUpperCase(str.charAt(i))) {
+                answer += Character.toLowerCase(str.charAt(i));
+            } else if (Character.isLowerCase(str.charAt(i))) {
+                answer += Character.toUpperCase(str.charAt(i));
+            } else {
+                answer += str.charAt(i);
+            }
+        }
+        return answer;
+    }
+}
+```
+-> 문자열을 한 글자씩 순회하며, `Character.isUpperCase()`/`Character.isLowerCase()`로 대문자인지 소문자인지 판별.
+   대문자면 `Character.toLowerCase()`로 소문자 변환, 소문자면 `Character.toUpperCase()`로 대문자 변환, 그 외(숫자, 특수문자 등)는 그대로 유지.
+
+-------------------------------------------------
+## 핵심 원리
+- replaceAll()은 매칭된 부분을 정해진 하나의 문자열로 일괄 치환하는 함수라서, "매칭되는 각 문자를 서로 다른 규칙으로 각각 변환"해야 하는 문제(대문자↔소문자 반전처럼)에는 적합하지 않음. 
+  이런 경우엔 문자열을 순회하며 문자 단위로 개별 판단하는 방식이 필요함.
+- Character.isUpperCase(c) / Character.isLowerCase(c)로 문자 하나가 대문자인지 소문자인지 판별 가능.
+- Character.toLowerCase(c) / Character.toUpperCase(c)로 문자 하나를 소문자/대문자로 변환 가능.
+- 대소문자가 아닌 문자(숫자, 공백, 특수문자 등)는 별도 처리 없이 그대로 결과에 포함시켜야 함 (else 분기로 처리).
+
+## 언제 쓸 수 있나?
