@@ -1,0 +1,68 @@
+작상 날짜 - 2026.08.22
+## 문제
+정수 n과 정수 배열 list가 매개변수로 주어질 때, list에서 n의 배수가 아닌 수들을 제거한 배열을 return하도록 solution 함수를 완성해주세요.
+입출력 예
+n	 |            numlist	            |  result
+3	 | [4, 5, 6, 7, 8, 9, 10, 11, 12]	| [6, 9, 12]
+5	 | [1, 9, 3, 10, 13, 5]	          | [10, 5]
+12 |	[2, 100, 120, 600, 12, 12]	  | [120, 600, 12, 12]
+
+// AI나 인터넷의 도움을 받았을 경우
+## 도움 받기 전 내 풀이
+```java
+class Solution {
+    public int[] solution(int n, int[] list) {
+        int cnt = 0;
+        for (int i = 0; i < list.length; i++) {
+            if (list[i] % n == 0) cnt++;
+        }
+        
+        int[] answer = new int[cnt];
+        int num = 0;
+        for (int i = 0; i < list.length; i++) {
+            if (list[i] % n == 0) {
+                answer[i] += list[i];
+            }
+        }
+        return answer;
+    }
+}
+```
+발생 오류
+-> 두 번째 for문에서 answer[i] += list[i]로 작성한 게 문제. 여기서 i는 원본 배열 list의 인덱스를 그대로 쓰고 있는데, answer는 list보다 크기가 작은(조건을 만족하는 원소만 담을) 새 배열이라 인덱스 체계가 서로 다름. 
+   list에서 조건을 만족하는 원소가 나올 때마다 answer는 0번부터 순서대로 채워져야 하는데, i를 그대로 쓰면 list의 인덱스가 큰 값일 때 answer의 범위를 넘어서거나(ArrayIndexOutOfBoundsException), 
+   중간에 빈 칸(기본값 0)이 섞인 채로 채워지는 문제가 생김.
+
+
+## 내 풀이
+```java
+class Solution {
+    public int[] solution(int n, int[] list) {
+        int cnt = 0;
+        for (int i = 0; i < list.length; i++) {
+            if (list[i] % n == 0) cnt++;
+        }
+        
+        int[] answer = new int[cnt];
+        int num = 0;
+        for (int i = 0; i < list.length; i++) {
+            if (list[i] % n == 0) {
+                answer[num] = list[i];
+                num++;
+            }
+        }
+        return answer;
+    }
+}
+```
+-> 두 번째 for문에서 answer[i] 대신 별도로 관리하는 num (0부터 시작해서 조건을 만족할 때마다 1씩 증가)을 인덱스로 사용하도록 수정.
+   list를 순회하는 인덱스(i)와, answer에 값을 채우는 인덱스(num)를 분리함으로써, answer가 항상 0번부터 순서대로 빈틈없이 채워지도록 함.
+-------------------------------------------------
+## 핵심 원리
+- "조건을 만족하는 원소만 모아 새 배열을 만드는" 문제는, 원본 배열의 인덱스와 새 배열의 인덱스를 반드시 분리해서 관리해야 함. 
+  원본 인덱스를 새 배열에 그대로 재사용하면, 새 배열의 크기가 원본보다 작기 때문에 값이 누락되거나 범위를 벗어나는 오류가 생김.
+- 패턴: (1) 첫 번째 순회로 조건을 만족하는 개수를 세서 배열 크기를 정하고, (2) 두 번째 순회에서 조건을 만족할 때마다 별도의 카운터 변수(0부터 시작)를 새 배열의 인덱스로 사용해 값을 채워 넣음. 
+  이 카운터는 원본 배열의 순회 인덱스와 별개로 증가함.
+- 이전에 풀었던 "n의 약수를 오름차순으로 담은 배열" 문제와 동일한 2단계(개수 세기 → 배열 생성 → 다시 순회하며 채우기) 패턴이 적용되는 문제였음.
+
+## 언제 쓸 수 있나?
