@@ -1,0 +1,47 @@
+작상 날짜 - 2026.09.07
+## 문제
+정수가 담긴 배열 array와 정수 n이 매개변수로 주어질 때, array에 n이 몇 개 있는 지를 return 하도록 solution 함수를 완성해보세요.
+
+// AI나 인터넷의 도움을 받았을 경우
+## 도움 받기 전 내 풀이
+```java
+class Solution {
+    public int solution(int[] array, int n) {
+        int answer = 0;
+        for (array[] arr : array) {
+            if (arr == n) answer++;
+        }
+        return answer;
+    }
+}
+```
+발생 오류
+-> 향상된 for문에 대한 지식 부족. 자료형 부분이 틀림.
+
+## 내 풀이
+```java
+class Solution {
+    public int solution(int[] array, int n) {
+        int answer = 0;
+        for (int arr : array) {
+            if (arr == n) answer++;
+        }
+        return answer;
+    }
+}
+```
+
+## 도움 받은 풀이
+```java
+
+```
+
+## 더 나은 풀이
+```java
+
+```
+
+-------------------------------------------------
+## 핵심 원리
+
+## 언제 쓸 수 있나?
