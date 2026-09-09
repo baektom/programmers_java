@@ -1,0 +1,44 @@
+작상 날짜 - 2026.09.09
+## 문제
+문자열 my_string이 매개변수로 주어질 때, my_string 안에 있는 숫자만 골라 오름차순 정렬한 리스트를 return 하도록 solution 함수를 작성해보세요.
+입출력 예
+my_string	   | result
+"hi12392"	   | [1, 2, 2, 3, 9]
+"p2o4i8gj2"	 | [2, 2, 4, 8]
+"abcde0"	   | [0]
+
+## 내 풀이
+```java
+import java.util.*;
+class Solution {
+    public int[] solution(String my_string) {
+        String str = my_string.replaceAll("[^0-9]", ""); // 문자열에서 숫자 제외 문자 제거, ^는 부정의 의미.
+        String[] numArr = new String[str.length()];
+        for (int i = 0; i < str.length(); i++) {
+            numArr[i] = str.charAt(i) + "";
+        } // 숫자만 남은 문자열을 문자로 쪼개어 문자열 배열에 대입.
+        
+        int[] answer = new int[numArr.length]; // answer 배열의 길이 초기화.
+        for (int i = 0; i < numArr.length; i++) {
+            answer[i] = Integer.parseInt(numArr[i]);
+        } // numArr 문자열 배열에 있는 숫자형 문자열을 정수로 변환 후 answer 배열에 인덱스 별 대입.
+        Arrays.sort(answer); // 배열 오름차순 정렬
+        
+        return answer;
+    }
+}
+```
+
+## 도움 받은 부분
+replaceAll() 함수의 문자 제거 방법에 대한 정보.
+배열 오름차순 정렬에 대한 정보.
+
+## 더 나은 풀이
+```java
+
+```
+
+-------------------------------------------------
+## 핵심 원리
+
+## 언제 쓸 수 있나?
