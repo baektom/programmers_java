@@ -1,0 +1,37 @@
+# 문자열 정렬하기(2) ★★★★★
+- 날짜: 2026.10.01
+- 결과: 도움 받음 (거의 전체)
+- 문제 요약: 문자열을 전부 소문자로 바꾸고 알파벳 순으로 정렬해서 return
+
+## 막힌 지점
+- 문자열을 정렬하려는데 방법을 몰랐음 (정렬은 String이 아니라 배열에 쓰는 것)
+- 몰랐거나 헷갈렸던 것
+  - `toLowerCase()` 존재만 알고 사용법을 모름
+  - `toCharArray()`로 문자열을 char 배열로 바꿀 수 있다는 것 자체를 처음 알았음
+  - `Arrays.sort()`는 배열에만 쓸 수 있다는 걸 까먹었음
+  - char 배열을 다시 String으로 되돌리려면 `new String(배열)`을 써야 함
+
+## 해결 포인트
+- String은 직접 정렬이 안 되니까 **문자열 → char 배열 → 정렬 → 다시 문자열** 흐름으로 가야 함
+
+## 풀이 코드
+```java
+import java.util.*;
+
+class Solution {
+    public String solution(String my_string) {
+        String str = my_string.toLowerCase();       // 1. 소문자로 통일
+        char[] charArr = str.toCharArray();         // 2. 문자열 → char 배열
+        Arrays.sort(charArr);                       // 3. 배열 정렬
+        String answer = new String(charArr);        // 4. char 배열 → 문자열
+        return answer;
+    }
+}
+```
+
+## 다음에 이런 유형 보면
+- "문자열을 정렬하라"가 보이면 → `toCharArray()` → `Arrays.sort()` → `new String()` 순서 떠올리기
+
+## 재풀이
+- 재풀이 날짜: 
+- 결과:
